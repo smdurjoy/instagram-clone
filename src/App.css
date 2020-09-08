@@ -2,3 +2,20 @@
   margin: 0;
   padding: 0;
 }
+
+.app {
+  background-color: #fafafa;
+  height: 100vh;
+}
+
+.app__header {
+  background-color: white;
+  object-fit: contain;
+  border-bottom: 1px solid lightgray;
+  padding: 15px;
+  margin-bottom: 45px;
+}
+
+.app__headerImage {
+  object-fit: contain;
+}
