@@ -74,7 +74,7 @@ function ImageUpload( {username} ) {
                 
                 <Button variant="outlined" color="primary" component="label">
                     <input type="file" onChange={handleChange} style={{ display: "none" }} />
-                    <ImageIcon/>
+                    <ImageIcon fontSize="small" />
                 </Button>
             </div>
 

@@ -112,7 +112,7 @@ function App() {
               <Input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
               <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
               <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-              <Button className="app__signUpButton" variant="outlined" color="primary" onClick={signup}>Sign Up</Button>
+              <Button type="submit" className="app__signUpButton" variant="outlined" color="primary" onClick={signup}>Sign Up</Button>
             </form>
           </div>
         </Fade>
@@ -139,7 +139,7 @@ function App() {
               </center>
               <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
               <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-              <Button onClick={signin}>Sign In</Button>
+              <Button type="submit" variant="outlined" color="primary" onClick={signin}>Sign In</Button>
             </form>
           </div>
         </Fade>
@@ -161,13 +161,13 @@ function App() {
         <div className="app__postsLeft">
           {
             posts.map(({id, post}) => (
-              <Post key={id} username={post.username} caption={post.caption} imgUrl={post.imgUrl}/>
+              <Post key={id} postId={id} username={post.username} user={user} caption={post.caption} imgUrl={post.imgUrl}/>
             ))
           }
         </div>
         <div className="app__postsRight">
           <InstagramEmbed
-            url='https://instagr.am/p/Zw9o4/'
+            url='https://www.instagram.com/p/CElW4JhnGH2/'
             maxWidth={320}
             hideCaption={false}
             containerTagName='div'
