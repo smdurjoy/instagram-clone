@@ -1,0 +1,11 @@
+.imageUpload {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: space-between;
+}
+
+.imageUpload__caption {
+    flex: 1;
+    margin-right: 5px;
+}

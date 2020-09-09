@@ -7,6 +7,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Button, Input } from '@material-ui/core';
+import ImageUpload from './ImageUpload';
+import InstagramEmbed from 'react-instagram-embed';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -33,7 +35,7 @@ function App() {
   const [ user, setUser ] = useState(null);
 
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapShot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapShot => {
       setPosts(snapShot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -109,8 +111,8 @@ function App() {
               </center>
               <Input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
               <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-              <Input type="text" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-              <Button onClick={signup}>Sign Up</Button>
+              <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <Button className="app__signUpButton" variant="outlined" color="primary" onClick={signup}>Sign Up</Button>
             </form>
           </div>
         </Fade>
@@ -136,7 +138,7 @@ function App() {
                 <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""/>
               </center>
               <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-              <Input type="text" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
               <Button onClick={signin}>Sign In</Button>
             </form>
           </div>
@@ -146,9 +148,7 @@ function App() {
       <div className="app__header">
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""/>
         {user ? (
-          <div className="app__signupContainer">
             <Button onClick={() => auth.signOut()}>Logout</Button>
-          </div>
         ) : (
           <div className="app__signupContainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign in</Button>
@@ -157,12 +157,35 @@ function App() {
         )}
       </div>
 
-    {
-      posts.map(({id, post}) => (
-        <Post key={id} username={post.username} caption={post.caption} imgUrl={post.imgUrl}/>
-      ))
-    }
+      <div className="app__posts">
+        <div className="app__postsLeft">
+          {
+            posts.map(({id, post}) => (
+              <Post key={id} username={post.username} caption={post.caption} imgUrl={post.imgUrl}/>
+            ))
+          }
+        </div>
+        <div className="app__postsRight">
+          <InstagramEmbed
+            url='https://instagr.am/p/Zw9o4/'
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName='div'
+            protocol=''
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          />
+        </div>
+      </div>
 
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName}/>
+      ) : (
+        <h3>You need to login to upload !</h3>
+      )}
     </div>
   );
 }
